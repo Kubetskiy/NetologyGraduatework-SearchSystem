@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BooleanSearchEngine implements SearchEngine {
     private final Set<String> stopWords;
@@ -18,12 +15,17 @@ public class BooleanSearchEngine implements SearchEngine {
 
     @Override
     public List<PageEntry> search(String word) {
-/*
-        for (Map.Entry<String, Set<IndexedPage>> page : allIndexedDocuments) {
-
+        List<PageEntry> response = new ArrayList<>();
+        var documents = allIndexedDocuments.keySet();
+        for (String pdfName : documents) {
+            var pages = allIndexedDocuments.get(pdfName);
+            for (IndexedPage page : pages) {
+                if (page.getWordDistribution().containsKey(word)) {
+                    response.add(new PageEntry(pdfName, page.getPage()+1, page.getWordDistribution().get(word)));
+                }
+            }
         }
-*/
-
-        return Collections.emptyList();
+        Collections.sort(response);
+        return response;
     }
 }

@@ -60,7 +60,7 @@ public class DataHandler {
             for (int i = 0; i < doc.getNumberOfPages(); i++) {
                 page = doc.getPage(i + 1);
                 text = PdfTextExtractor.getTextFromPage(page);
-                words = text.split("\\P{IsAlphabetic}+");
+                words = text.toLowerCase().split("\\P{IsAlphabetic}+");
                 // Генерим распределение
                 wordDistribution = new HashMap<>();
                 for (String word : words) {
